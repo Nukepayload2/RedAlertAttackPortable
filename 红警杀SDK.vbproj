@@ -74,9 +74,11 @@
     <Compile Include="卡牌管理器.vb" />
     <Compile Include="基本手牌.vb" />
     <Compile Include="基本技能.vb" />
+    <Compile Include="基本标记.vb" />
     <Compile Include="基本阵营.vb" />
     <Compile Include="游戏.vb" />
     <Compile Include="玩家.vb" />
+    <Compile Include="设置管理器.vb" />
     <Compile Include="语言拓展.vb" />
     <Compile Include="资源加载.vb" />
     <Compile Include="默认资源.vb" />
@@ -101,6 +103,12 @@
     <Reference Include="System.Threading.Tasks">
       <HintPath>..\..\红警杀手机版1\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.Threading.Tasks.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ra2CodeAnalysis\Ra2CodeAnalysis\Ra2CodeAnalysis.vbproj">
+      <Project>{103245e0-d118-4626-ad5f-6580d8b46b8e}</Project>
+      <Name>Ra2CodeAnalysis</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.VisualBasic.targets" />
   <Import Project="..\..\红警杀手机版1\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\红警杀手机版1\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
