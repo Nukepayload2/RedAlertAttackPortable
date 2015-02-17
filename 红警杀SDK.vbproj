@@ -75,6 +75,7 @@
     <Compile Include="基本手牌.vb" />
     <Compile Include="基本技能.vb" />
     <Compile Include="基本标记.vb" />
+    <Compile Include="基本标记特技.vb" />
     <Compile Include="基本阵营.vb" />
     <Compile Include="游戏.vb" />
     <Compile Include="玩家.vb" />

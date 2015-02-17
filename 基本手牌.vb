@@ -214,6 +214,7 @@ Namespace 基本手牌
         Enum DefaultRoundLimits
             NoLimit
             HighAmmor = 4
+            DefenseAbility = 4
             Commando = 7 'HighInfantry 和 HeroAmmor 
             StrikeAbility = 8
             SuperWeapon = 9
@@ -472,6 +473,7 @@ Namespace 基本手牌
         End Property
         Public Overrides ReadOnly Property 短说明 As String = "升阳帝国海军来捣乱了！"
         Public Overrides ReadOnly Property 长说明 As String = "升阳帝国海军来捣乱了！除了使用者，每人都要打出一张杀或特殊杀，否则受到1点伤害."
+        Public Overrides ReadOnly Property 是群攻牌 As Boolean = True
 
         Public Overrides Function AI响应(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家) As Boolean
             MyBase.AI响应(游戏, 源玩家, 目标玩家)
@@ -491,6 +493,7 @@ Namespace 基本手牌
                 Return 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).卡牌分类.战术_攻击
             End Get
         End Property
+        Public Overrides ReadOnly Property 是群攻牌 As Boolean = True
         Public Overrides ReadOnly Property 短说明 As String = "一大群鳄鱼正在接近。。。"
         Public Overrides ReadOnly Property 长说明 As String = "一大群鳄鱼正在接近！使用者阵营之外的玩家需要打出闪"
         Public Overrides Function 筛选玩家(玩家表 As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家), 当前玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家) As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
@@ -499,45 +502,21 @@ Namespace 基本手牌
     End Class
     Public Class 力场护盾(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
         Inherits 手牌Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-
         Public Overrides ReadOnly Property AI分类 As Integer
             Get
                 Return 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).卡牌分类.战术_协助
             End Get
         End Property
-
-        Public Overrides ReadOnly Property 出牌阶段能被打出 As Boolean = False
-
-        Public Overrides ReadOnly Property 回合数限制 As Integer = DefaultRoundLimits.NoLimit
-
-        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 是超级武器 As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 短说明 As String
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 科技等级 As Integer
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 长说明 As String
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
+        Public Overrides ReadOnly Property 出牌阶段能被打出 As Boolean = True
+        Public Overrides ReadOnly Property 回合数限制 As Integer = DefaultRoundLimits.DefenseAbility
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
+        Public Overrides ReadOnly Property 是超级武器 As Boolean = False
+        Public Overrides ReadOnly Property 短说明 As String = "下回合1/2几率抵消任何效果"
+        Public Overrides ReadOnly Property 科技等级 As Integer = DefaultTechLevels.DefenceAbility
+        Public Overrides ReadOnly Property 长说明 As String = "下回合每个效果生效前翻一张新牌，如果是黑色则抵消此次效果。"
+        Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            MyBase.响应失败(游戏, 源玩家, 目标玩家)
+            目标玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.力场护盾(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End Sub
     End Class
 End Namespace

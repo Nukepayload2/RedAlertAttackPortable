@@ -23,6 +23,8 @@ End Namespace
 Namespace 基本标记
     Public Class 力场护盾(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
         Inherits 标记Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-
+        Sub New()
+            MyBase.New({New 力场特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)})
+        End Sub
     End Class
 End Namespace

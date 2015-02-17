@@ -314,6 +314,7 @@ Namespace 核心
             Inherits I特效
             Sub 增加(游戏 As I游戏, 玩家 As I玩家)
             Sub 减少(游戏 As I游戏, 玩家 As I玩家)
+            Property 拥有者 As I标记
         End Interface
         ''' <summary>
         ''' 表示武将牌上附加的标记
@@ -344,6 +345,9 @@ Namespace 核心
             ReadOnly Property 小图标 As 图像类型
             ReadOnly Property 大图标 As 图像类型
             ReadOnly Property 默认阵营色Argb As Integer
+        End Interface
+        Public Interface I标记管理器
+            Function 创建标记控件(标记 As I标记) As I标记控件
         End Interface
         ''' <summary>
         ''' 是一种武将牌选择器
@@ -399,6 +403,7 @@ Namespace 核心
             ReadOnly Property 存档管理器 As I存档管理器
             ReadOnly Property 卡牌管理器 As I卡牌管理器
             ReadOnly Property 播放器 As I声音播放器
+            ReadOnly Property 标记管理器 As I标记管理器
             ReadOnly Property 声音资源加载器 As 资源.资源加载器
             ReadOnly Property 图像资源加载器 As 资源.图像资源加载器(Of 图像类型)
             ''' <summary>

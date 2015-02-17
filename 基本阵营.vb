@@ -76,7 +76,7 @@ Namespace 基本阵营
             End Get
         End Property
         Public Overrides ReadOnly Property 短说明 As String = "尤里的阵营必定是独一无二的"
-        Public Overrides ReadOnly Property 长说明 As String = "尤里的阵营必定是独一无二的，能制造基因突变器和心灵控制器。"
+        Public Overrides ReadOnly Property 长说明 As String = "尤里的阵营必定是独一无二的，拥有众多黑科技，能制造基因突变器和心灵控制器。"
         Public Overrides ReadOnly Property 默认阵营色Argb As Integer
             Get
                 Return &HFF << 24 Or &H7F << 16 Or &H7F
