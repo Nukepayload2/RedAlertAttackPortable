@@ -27,16 +27,4 @@ Namespace 基本标记
             MyBase.New({New 力场特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)})
         End Sub
     End Class
-    Public Class 核弹读秒(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-        Inherits 标记Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-        Sub New()
-            MyBase.New({New 核弹读秒特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)})
-        End Sub
-    End Class
-    Public Class 核弹发射(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-        Inherits 标记Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-        Sub New()
-            MyBase.New({New 核弹特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)})
-        End Sub
-    End Class
 End Namespace

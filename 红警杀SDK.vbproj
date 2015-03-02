@@ -72,7 +72,6 @@
     <Compile Include="动态支持.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="卡牌管理器.vb" />
-    <Compile Include="呈现.vb" />
     <Compile Include="基本手牌.vb" />
     <Compile Include="基本技能.vb" />
     <Compile Include="基本标记.vb" />

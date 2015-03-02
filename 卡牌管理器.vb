@@ -29,7 +29,7 @@ Namespace 基元
             End Get
         End Property
 
-        Public Function 新建手牌(卡牌 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I手牌) As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I手牌控件 Implements 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I卡牌管理器.新建手牌
+        Public Function 新建手牌(卡牌 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I手牌控件) As 用户控件类型 Implements 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I卡牌管理器.新建手牌
             Throw New NotImplementedException()
         End Function
 
