@@ -224,7 +224,7 @@ Namespace 基本手牌
             SupportAbility '维修
             MidInfantry  '工程师,疯狂依文
             DropPods '空降
-            DefenceAbility = 5 '防御建筑
+            DefenseAbility = 5 '防御建筑
             HighInfantry = 6 '鲍里斯，谭雅，尤里X
             HighAmmor = 7 '天启，光棱坦克，脑车
             HeroAmmor = 8 '保留。添加标记为Mod的卡牌，类似：根除者虫甲，MARV，救赎者，万夫长攻城机甲...
@@ -512,11 +512,81 @@ Namespace 基本手牌
         Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
         Public Overrides ReadOnly Property 是超级武器 As Boolean = False
         Public Overrides ReadOnly Property 短说明 As String = "下回合1/2几率抵消任何效果"
-        Public Overrides ReadOnly Property 科技等级 As Integer = DefaultTechLevels.DefenceAbility
+        Public Overrides ReadOnly Property 科技等级 As Integer = DefaultTechLevels.DefenseAbility
         Public Overrides ReadOnly Property 长说明 As String = "下回合每个效果生效前翻一张新牌，如果是黑色则抵消此次效果。"
         Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
             MyBase.响应失败(游戏, 源玩家, 目标玩家)
             目标玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.力场护盾(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
         End Sub
+    End Class
+    Public Class 核弹发射井(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Inherits 手牌Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Public Overrides ReadOnly Property AI分类 As Integer
+            Get
+                Return 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).卡牌分类.超级武器
+            End Get
+        End Property
+        Public Overrides ReadOnly Property 出牌阶段能被打出 As Boolean = True
+        Public Overrides ReadOnly Property 回合数限制 As Integer = DefaultRoundLimits.SuperWeapon
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
+        Public Overrides ReadOnly Property 是超级武器 As Boolean = True
+        Public Overrides ReadOnly Property 短说明 As String = "每5的倍数回合可发射核弹"
+        Public Overrides ReadOnly Property 科技等级 As Integer = DefaultTechLevels.SuperWeapon
+        Public Overrides ReadOnly Property 长说明 As String = "每存在5的倍数回合可以发射一枚核弹"
+        Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            MyBase.响应失败(游戏, 源玩家, 目标玩家)
+            源玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.核弹读秒(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End Sub
+    End Class
+    Public Class 核弹攻击(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Inherits 手牌Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+
+        Public Overrides ReadOnly Property AI分类 As Integer
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property 出牌阶段能被打出 As Boolean
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property 回合数限制 As Integer
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property 是超级武器 As Boolean
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property 短说明 As String
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property 科技等级 As Integer
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property 长说明 As String
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
     End Class
 End Namespace

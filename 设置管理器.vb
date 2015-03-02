@@ -122,6 +122,10 @@ Public Class 设置管理器(Of 鼠标光标, 图像类型, 画刷类型, 用户
     End Sub
 
     Public Sub 读取设置() Implements 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I设置管理器.读取设置
-        Analizer = New INIAnalizer(SettingReadWriter.ReadAllText)
+        If Analizer Is Nothing Then
+            Analizer = New INIAnalizer(SettingReadWriter.ReadAllText)
+        Else
+            Analizer.Reload(SettingReadWriter.ReadAllText)
+        End If
     End Sub
 End Class
