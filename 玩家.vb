@@ -592,6 +592,11 @@ Namespace 基元
             Next
             Return ls
         End Function
+
+        Public MustOverride Async Function 失去标记(发起者 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 卡牌 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I标记控件) As Task(Of IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I标记控件)) Implements 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家.失去标记
+
+        Public MustOverride Async Function 得到标记(发起者 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 卡牌 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I标记控件) As Task(Of IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I标记控件)) Implements 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家.得到标记
+
     End Class
 
 End Namespace

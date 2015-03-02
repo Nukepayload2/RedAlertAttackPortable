@@ -88,15 +88,7 @@ Namespace 核心
             玩家胜利
             电脑胜利
         End Enum
-        ''' <summary>
-        ''' 等同于MsgBoxStyles
-        ''' </summary>
-        Public Enum 消息框样式枚举
-            一般
-            消息
-            警告
-            错误
-        End Enum
+
         ''' <summary>
         ''' 扑克牌的四种花色，在手牌使用这些花色。
         ''' </summary>
@@ -114,32 +106,7 @@ Namespace 核心
             出牌时
             出牌后
         End Enum
-        ''' <summary>
-        ''' 消息框返回的状态
-        ''' </summary>
-        Public Enum 消息框状态枚举
-            没选
-            确定
-            取消
-        End Enum
-        ''' <summary>
-        ''' 表示消息框上的按钮
-        ''' </summary>
-        Public Enum 消息框按钮枚举
-            确定
-            确定和取消
-            是
-            是和否
-        End Enum
-        ''' <summary>
-        ''' 表示输入框上面的按钮
-        ''' </summary>
-        Public Enum 输入框按钮枚举
-            确定
-            确定和取消
-            确定和帮助
-            全部
-        End Enum
+
         ''' <summary>
         ''' 用于让AI识别卡牌的类型。 
         ''' 此类型可以用Or运算符来混合多个值
@@ -434,7 +401,7 @@ Namespace 核心
         Public Interface I卡牌管理器
             ReadOnly Property 可用手牌 As IList(Of I手牌控件)
             Function 随机手牌() As I手牌控件
-            Function 新建手牌(卡牌 As I手牌控件) As 用户控件类型
+            Function 新建手牌(卡牌 As I手牌) As I手牌控件
         End Interface
         ''' <summary>
         ''' 表示超级武器的特效
@@ -462,6 +429,8 @@ Namespace 核心
             ReadOnly Property 全部手牌 As I控件表(Of I手牌控件)
             ReadOnly Property 全部标记 As I控件表(Of I标记控件)
             ReadOnly Property 选择的手牌 As IEnumerable(Of I手牌控件)
+            Function 失去标记(发起者 As I游戏, 卡牌 As I标记控件) As Task(Of IEnumerable(Of I标记控件))
+            Function 得到标记(发起者 As I游戏, 卡牌 As I标记控件) As Task(Of IEnumerable(Of I标记控件))
             Function 失去手牌(发起者 As I游戏, 卡牌 As I手牌控件) As Task(Of IEnumerable(Of I手牌控件))
             Function 失去手牌(发起者 As I游戏, 卡牌 As IEnumerable(Of I手牌控件)) As Task(Of IEnumerable(Of I手牌控件))
             Function 失去选定的手牌(发起者 As I游戏, 卡牌 As IEnumerable(Of I手牌控件)) As Task(Of IEnumerable(Of I手牌控件))
@@ -504,11 +473,11 @@ Namespace 核心
         ''' </summary>
         Public Interface I作弊引擎
             ReadOnly Property 目标游戏 As I游戏
-            Property 效果 As IList(Of I武将特技)
+            Property 发动效果 As IList(Of I武将特技)
             Function 获取手牌() As IList(Of I手牌控件)
             Sub 超级武器攻击(目标 As IList(Of I玩家))
             Sub 操控玩家数据(目标 As IList(Of I玩家))
-            Property 相关玩家 As IList(Of I玩家) '在开局的时候把效果加到玩家身上
+            Property 作弊玩家 As IList(Of I玩家) '在开局的时候把效果加到玩家身上
         End Interface
         ''' <summary>
         ''' 手牌和将牌的特性
@@ -563,6 +532,7 @@ Namespace 核心
             ReadOnly Property 是阵营特定牌 As Boolean
             ReadOnly Property 特定阵营 As IEnumerable(Of I阵营)
         End Interface
+
         'UI相关接口
         ''' <summary>
         ''' 所有与UserControl相关操作的UI元素都要实现这个接口。为了UIElementCollection能正常Add,Remove。
@@ -614,6 +584,42 @@ Namespace 核心
             Property 特性 As I手牌
             Property 被选中 As Boolean
         End Interface
+        ''' <summary>
+        ''' 等同于MsgBoxStyles
+        ''' </summary>
+        Public Enum 消息框样式枚举
+            一般
+            消息
+            警告
+            错误
+        End Enum
+        ''' <summary>
+        ''' 表示消息框上的按钮
+        ''' </summary>
+        Public Enum 消息框按钮枚举
+            确定
+            确定和取消
+            是
+            是和否
+        End Enum
+        ''' <summary>
+        ''' 表示输入框上面的按钮
+        ''' </summary>
+        Public Enum 输入框按钮枚举
+            确定
+            确定和取消
+            确定和帮助
+            全部
+        End Enum
+        ''' <summary>
+        ''' 消息框返回的状态
+        ''' </summary>
+        Public Enum 消息框状态枚举
+            没选
+            确定
+            取消
+        End Enum
+
         ''' <summary>
         ''' 让用户输入一段字，相当于InputBox
         ''' </summary>
@@ -672,6 +678,8 @@ Namespace 核心
         Public Interface I游戏窗口
             ReadOnly Property 消息框 As I消息框
             ReadOnly Property 输入框 As I输入框
+            ReadOnly Property 判定区 As I手牌框
+            ReadOnly Property 图形叠加区 As 呈现.可视元素.I动画
             Sub 显示玩家胜利画面()
             Sub 显示玩家战败画面()
             Sub 返回标题画面()
@@ -711,6 +719,7 @@ Namespace 核心
             ReadOnly Property Left(Item As T) As Double
             ReadOnly Property Top(Item As T) As Double
         End Interface
+
 #End Region
     End Class
 End Namespace
