@@ -62,7 +62,7 @@ End Class
 Public Class 核弹读秒特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
     Inherits 基本标记特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
 
-    Public Overrides ReadOnly Property 说明 As String = "每5个回合将一枚核弹准备好"
+    Public Overrides ReadOnly Property 说明 As String = "每5的倍数回合将一枚核弹准备好"
     Dim Round As Integer = 1
     Public Overrides Async Sub 回合增加(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏)
         MyBase.回合增加(游戏)
@@ -94,6 +94,99 @@ Public Class 核弹特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控
                 Await 玩家.随机失去手牌(游戏, 1)
             End If
             Await TaskEx.Delay(游戏.设置.人类玩家出牌超时)
+        Next
+    End Sub
+
+    Public Overrides Sub 增加(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+
+    End Sub
+End Class
+
+
+Public Class 闪电读秒特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+    Inherits 基本标记特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+
+    Public Overrides ReadOnly Property 说明 As String = "每5的倍数回合将闪电风暴准备好"
+    Dim Round As Integer = 1
+    Public Overrides Async Sub 回合增加(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏)
+        MyBase.回合增加(游戏)
+        If Round Mod 5 = 0 Then
+            Await 玩家.得到手牌(游戏, 游戏.卡牌管理器.新建手牌(New 闪电风暴(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End If
+        Round += 1
+    End Sub
+    Public Overrides Sub 减少(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+
+    End Sub
+    Dim 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家
+    Public Overrides Sub 增加(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+        Me.玩家 = 玩家
+    End Sub
+End Class
+Public Class 闪电特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+    Inherits 基本标记特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+
+    Public Overrides ReadOnly Property 说明 As String = "引发闪电风暴效果"
+
+    Public Overrides Async Sub 减少(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+        For i As Integer = 1 To 8
+            Dim Card = 游戏.卡牌管理器.随机手牌
+            游戏.窗体.判定区.Add(Card)
+            If Card.特性.花色和点数.花色 = 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).花色枚举.黑桃 Then
+                Dim d = CInt(Card.特性.花色和点数.点数)
+                If d >= 2 AndAlso d <= 9 Then
+                    玩家.生命值(游戏, 玩家) -= 2
+                End If
+            End If
+            Await TaskEx.Delay(游戏.设置.人类玩家出牌超时)
+        Next
+    End Sub
+
+    Public Overrides Sub 增加(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+
+    End Sub
+End Class
+
+
+Public Class 精神控制读秒特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+    Inherits 基本标记特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+
+    Public Overrides ReadOnly Property 说明 As String = "每5的倍数回合将心灵激荡准备好"
+    Dim Round As Integer = 1
+    Public Overrides Async Sub 回合增加(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏)
+        MyBase.回合增加(游戏)
+        If Round Mod 5 = 0 Then
+            Await 玩家.得到手牌(游戏, 游戏.卡牌管理器.新建手牌(New 心灵激荡(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End If
+        Round += 1
+    End Sub
+    Public Overrides Sub 减少(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+
+    End Sub
+    Dim 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家
+    Public Overrides Sub 增加(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+        Me.玩家 = 玩家
+    End Sub
+End Class
+Public Class 精神控制特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+    Inherits 基本标记特技(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+    Sub New(源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+        MyBase.New
+        Me.源玩家 = 源玩家
+    End Sub
+    Public Overrides ReadOnly Property 说明 As String = "引发爆炸和精神控制"
+    Public 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家
+    Public Overrides Async Sub 减少(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+        Dim Loss As Integer = 0
+        For i As Integer = 玩家.全部手牌.Count To 0 Step -1
+            If Loss >= 2 Then Exit For
+            Dim card = Await 玩家.随机失去手牌(游戏, 1)
+            If card Is Nothing Then
+                Exit For
+            Else
+                Loss += 1
+                Await 源玩家.得到手牌(游戏, card)
+            End If
         Next
     End Sub
 

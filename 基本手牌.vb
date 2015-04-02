@@ -500,6 +500,14 @@ Namespace 基本手牌
             Return From p In 玩家表 Where p.控制者信息.group = 当前玩家.控制者信息.group
         End Function
     End Class
+    Public MustInherit Class 超级武器或发射器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Inherits 手牌Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Public Overrides ReadOnly Property AI分类 As Integer = 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).卡牌分类.超级武器
+        Public Overrides ReadOnly Property 出牌阶段能被打出 As Boolean = True
+        Public Overrides ReadOnly Property 回合数限制 As Integer = DefaultRoundLimits.SuperWeapon
+        Public Overrides ReadOnly Property 是超级武器 As Boolean = True
+        Public Overrides ReadOnly Property 科技等级 As Integer = DefaultTechLevels.SuperWeapon
+    End Class
     Public Class 力场护盾(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
         Inherits 手牌Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
         Public Overrides ReadOnly Property AI分类 As Integer
@@ -520,73 +528,77 @@ Namespace 基本手牌
         End Sub
     End Class
     Public Class 核弹发射井(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-        Inherits 手牌Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-        Public Overrides ReadOnly Property AI分类 As Integer
-            Get
-                Return 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).卡牌分类.超级武器
-            End Get
-        End Property
-        Public Overrides ReadOnly Property 出牌阶段能被打出 As Boolean = True
-        Public Overrides ReadOnly Property 回合数限制 As Integer = DefaultRoundLimits.SuperWeapon
+        Inherits 超级武器或发射器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
         Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
-        Public Overrides ReadOnly Property 是超级武器 As Boolean = True
         Public Overrides ReadOnly Property 短说明 As String = "每5的倍数回合可发射核弹"
-        Public Overrides ReadOnly Property 科技等级 As Integer = DefaultTechLevels.SuperWeapon
         Public Overrides ReadOnly Property 长说明 As String = "每存在5的倍数回合可以发射一枚核弹"
         Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
             MyBase.响应失败(游戏, 源玩家, 目标玩家)
             源玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.核弹读秒(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
         End Sub
+        Public Overrides Function 筛选玩家(玩家表 As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家), 当前玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家) As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            Return {当前玩家}
+        End Function
     End Class
     Public Class 核弹攻击(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-        Inherits 手牌Base(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
-
-        Public Overrides ReadOnly Property AI分类 As Integer
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 出牌阶段能被打出 As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 回合数限制 As Integer
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 是超级武器 As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 短说明 As String
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 科技等级 As Integer
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property 长说明 As String
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
+        Inherits 超级武器或发射器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
+        Public Overrides ReadOnly Property 短说明 As String = "向敌人发射核弹"
+        Public Overrides ReadOnly Property 长说明 As String = "苏联的科学家用最少的金钱研制了这种杀伤力极强的改良版核弹。仅一枚核弹就能让敌人的基地失去一半的实力。效果：敌生命值减半，每一张黑牌意味着失去一张手牌。对没有牌的1血敌人有秒杀效果。"
+        Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            MyBase.响应失败(游戏, 源玩家, 目标玩家)
+            目标玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.核弹发射(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End Sub
     End Class
+#Region "pre_write"
+    Public Class 天气控制机(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Inherits 超级武器或发射器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
+        Public Overrides ReadOnly Property 短说明 As String = "每5的倍数回合产生闪电风暴"
+        Public Overrides ReadOnly Property 长说明 As String = "每5的倍数回合在目标区域产生闪电风暴"
+        Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            MyBase.响应失败(游戏, 源玩家, 目标玩家)
+            源玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.闪电读秒(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End Sub
+        Public Overrides Function 筛选玩家(玩家表 As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家), 当前玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家) As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            Return {当前玩家}
+        End Function
+    End Class
+    Public Class 闪电风暴(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Inherits 超级武器或发射器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
+        Public Overrides ReadOnly Property 短说明 As String = "在目标区域产生闪电风暴"
+        Public Overrides ReadOnly Property 长说明 As String = "盟军的超级武器。立即在目标区域释放充满不祥之气的雷云，在目标回合结束时电闪雷鸣。目标区域将接受8次判定，每一张黑桃2-9产生2点伤害。"
+        Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            MyBase.响应失败(游戏, 源玩家, 目标玩家)
+            目标玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.闪电发射(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End Sub
+
+    End Class
+    Public Class 精神控制器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Inherits 超级武器或发射器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
+        Public Overrides ReadOnly Property 短说明 As String = "每5的倍数回合发动心灵激荡"
+        Public Overrides ReadOnly Property 长说明 As String = "每5的倍数回合产生心灵激荡攻击"
+        Public Overrides Function 筛选玩家(玩家表 As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家), 当前玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家) As IEnumerable(Of 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            Return {当前玩家}
+        End Function
+        Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            MyBase.响应失败(游戏, 源玩家, 目标玩家)
+            源玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.精神控制读秒(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)))
+        End Sub
+    End Class
+    Public Class 心灵激荡(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Inherits 超级武器或发射器(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)
+        Public Overrides ReadOnly Property 是红警杀Mod牌 As Boolean = False
+        Public Overrides ReadOnly Property 短说明 As String = "控制敌人3张牌"
+        Public Overrides ReadOnly Property 长说明 As String = "尤里的黑科技，在敌人摸牌后出牌前抢夺最多3张不免疫精神控制的牌"
+        Public Overrides Sub 响应失败(游戏 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I游戏, 源玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家, 目标玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+            MyBase.响应失败(游戏, 源玩家, 目标玩家)
+            目标玩家.全部标记.Add(游戏.标记管理器.创建标记控件(New 基本标记.精神控制发射(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)(源玩家)))
+        End Sub
+    End Class
+#End Region
+
 End Namespace
