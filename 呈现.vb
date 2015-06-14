@@ -3,6 +3,9 @@
     ''' 平台无关且不与用户交互
     ''' </summary>
     Public Module 可视元素
+        ''' <summary>
+        ''' 表示平面中的向量
+        ''' </summary>
         Public Structure Vector2
             Public X As Double
             Public Y As Double
@@ -29,16 +32,13 @@
             Sub 播放全部()
             Sub 停止全部()
             Property 全局偏移 As Vector2
-        End Interface
-        Public Interface I单动画
-            Inherits I动画
             Property 帧资源 As IEnumerable(Of I帧)
         End Interface
         Public Interface I超级武器动画
             Inherits I动画
-            Property 发射动画 As IEnumerable(Of I单动画)
-            Property 爆炸动画 As IEnumerable(Of I单动画)
-            Property 子爆炸动画 As IEnumerable(Of I单动画)
+            Property 发射动画 As IEnumerable(Of I动画)
+            Property 爆炸动画 As IEnumerable(Of I动画)
+            Property 子爆炸动画 As IEnumerable(Of I动画)
             Sub 播放目标动画()
             Sub 播放发射动画()
             Sub 播放爆炸动画和子爆炸动画()

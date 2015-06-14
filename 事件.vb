@@ -2,7 +2,7 @@
     <HideModuleName()>
     Module 公共事件
         Event 玩家出局(玩家顺序号 As Integer)
-        Public Sub 引发玩家出局(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型)(玩家 As 动态支持(Of 鼠标光标, 图像类型, 画刷类型, 用户控件类型).I玩家)
+        Public Sub 引发玩家出局(Of 图像类型, 鼠标光标, 用户控件类型)(玩家 As I玩家(Of 图像类型, 鼠标光标, 用户控件类型))
             RaiseEvent 玩家出局(玩家.顺序号)
         End Sub
     End Module

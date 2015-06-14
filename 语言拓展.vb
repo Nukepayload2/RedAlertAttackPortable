@@ -15,8 +15,8 @@ Friend Module 语言拓展
         Return CInt(从 - 0.5 + (ran.NextDouble * (到 - 从 + 1)))
     End Function
     <Extension>
-    Public Function EnterStage(Of T1, T2, T3, T4)(tj As 红警杀.核心.动态支持(Of T1, T2, T3, T4).I特效, StageName As String, Params As Object()) As Boolean
-        Return CBool(tj.GetType.GetMethod(StageName).Invoke(tj, Params))
+    Public Async Function EnterStage(Of T1, T2, T3)(tj As 核心.I特效(Of T1, T2, T3), StageName As String, Params As Object()) As Task(Of Boolean)
+        Return Await CType(tj.GetType.GetMethod(StageName).Invoke(tj, Params), Task(Of Boolean))
     End Function
     ''' <summary>
     ''' 计算围成圆形的标号最小差距
@@ -43,14 +43,24 @@ Friend Module 语言拓展
     ''' 可以判断没编码的AI分类是否包含编码后的AI分类
     ''' </summary> 
     <Extension>
-    Public Function Contains(Of T1, T2, T3, T4)(a As IEnumerable(Of 核心.动态支持(Of T1, T2, T3, T4).卡牌分类), b As Integer) As Boolean
+    Public Function Contains(a As IEnumerable(Of 核心.卡牌分类), b As Integer) As Boolean
         Dim va As Integer = 0
         For Each t In a
             va = va Or t
         Next
         Return va.Contain(b)
     End Function
+    Public Async Function DoNothingTask() As Task
+        Await TaskEx.Run(Sub()
 
+                         End Sub)
+    End Function
+    Public Async Function RetTrueTask() As Task(Of Boolean)
+        Return Await TaskEx.Run(Function() True)
+    End Function
+    Public Async Function RetFalseTask() As Task(Of Boolean)
+        Return Await TaskEx.Run(Function() False)
+    End Function
     ''' <summary>
     ''' 获取当前Type的用无参数Sub New构造而来的对象。只能用于Class的Type。
     ''' </summary>
