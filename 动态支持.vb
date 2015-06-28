@@ -440,6 +440,13 @@ Namespace 核心
         Inherits I特效(Of 图像类型, 鼠标光标, 用户控件类型)
         Function 投放时(发起者 As I玩家(Of 图像类型, 鼠标光标, 用户控件类型), 目标 As IList(Of I玩家(Of 图像类型, 鼠标光标, 用户控件类型))) As Task
     End Interface
+    Public Interface I作弊特效(Of 图像类型, 鼠标光标, 用户控件类型)
+        Inherits I特效(Of 图像类型, 鼠标光标, 用户控件类型)
+        Function 启用时() As Task(Of Boolean)
+        Function 已经启用() As Task
+        Function 即将禁用() As Task(Of Boolean)
+        Function 已经禁用() As Task
+    End Interface
     ''' <summary>
     ''' 牌桌上的玩家
     ''' </summary>
@@ -506,7 +513,8 @@ Namespace 核心
     ''' 小李子外挂的核心
     ''' </summary>
     Public Interface I作弊引擎(Of 图像类型, 鼠标光标, 用户控件类型)
-        Property 作弊玩家 As IList(Of I玩家(Of 图像类型, 鼠标光标, 用户控件类型)) '在开局的时候把效果加到玩家身上
+        ReadOnly Property 作弊玩家 As IList(Of I玩家(Of 图像类型, 鼠标光标, 用户控件类型)) '在开局的时候把效果加到玩家身上
+        ReadOnly Property 作弊效果 As IList(Of I作弊特效(Of 图像类型, 鼠标光标, 用户控件类型))
     End Interface
     ''' <summary>
     ''' 手牌和将牌的特性
@@ -567,7 +575,7 @@ Namespace 核心
     ''' 所有与UserControl相关操作的UI元素都要实现这个接口。为了UIElementCollection能正常Add,Remove。
     ''' </summary>
     Public Interface I自制控件(Of 用户控件类型)
-        Property 本体 As 用户控件类型
+        ReadOnly Property 本体 As 用户控件类型
         Property 启用 As Boolean
     End Interface
     ''' <summary>
@@ -576,6 +584,7 @@ Namespace 核心
     Public Interface I牌控件(Of 用户控件类型)
         Inherits I自制控件(Of 用户控件类型) '在牌框添加和移除
         Property 背面朝上 As Boolean
+        Property 被选中 As Boolean
         Function 当点选时() As Task
         Function 更新显示() As Task
     End Interface
@@ -600,8 +609,11 @@ Namespace 核心
     ''' </summary>
     Public Interface I武将控件(Of 图像类型, 鼠标光标, 用户控件类型)
         Inherits I牌控件(Of 用户控件类型)
-        Property 标记区 As I标记区(Of 图像类型, 鼠标光标, 用户控件类型)
+        ReadOnly Property 标记区 As I标记区(Of 图像类型, 鼠标光标, 用户控件类型)
         Property 特性 As I武将(Of 图像类型, 鼠标光标, 用户控件类型)
+        ReadOnly Property 血条 As I血条控件
+        ReadOnly Property 电条 As I电条控件
+        ReadOnly Property 名牌 As I名牌控件
     End Interface
     ''' <summary>
     ''' 可打出可判定的手牌
@@ -611,7 +623,6 @@ Namespace 核心
         Property 花色 As String
         Property 点数 As String
         Property 特性 As I手牌(Of 图像类型, 鼠标光标, 用户控件类型)
-        Property 被选中 As Boolean
     End Interface
 
     ''' <summary>
@@ -685,14 +696,11 @@ Namespace 核心
     ''' </summary>
     Public Interface I玩家区(Of 图像类型, 鼠标光标, 用户控件类型)
         Inherits I自制控件(Of 用户控件类型) '可滚动的玩家框中添加移除
-        Property 武将牌 As I武将控件(Of 图像类型, 鼠标光标, 用户控件类型)
-        Property 血条 As I血条控件
-        Property 电条 As I电条控件
-        Property 手牌区 As I手牌框(Of 图像类型, 鼠标光标, 用户控件类型)
+        ReadOnly Property 武将牌 As I武将控件(Of 图像类型, 鼠标光标, 用户控件类型)
+        ReadOnly Property 手牌区 As I手牌框(Of 图像类型, 鼠标光标, 用户控件类型)
         Property 人类玩家出牌模式 As Boolean
         Property 人类玩家弃牌模式 As Boolean
-        Property 名牌 As I名牌控件
-        Property 人类玩家过程结束按钮 As I按钮(Of 用户控件类型)
+        ReadOnly Property 人类玩家过程结束按钮 As I按钮(Of 用户控件类型)
         Function 选牌() As Task(Of IEnumerable(Of I手牌控件(Of 图像类型, 鼠标光标, 用户控件类型)))
     End Interface
 
@@ -709,16 +717,16 @@ Namespace 核心
     ''' </summary> 
     Public Interface I控件表(Of 用户控件类型)
         Inherits IList(Of 用户控件类型)
-        ReadOnly Property Left(Item As I自制控件(Of 用户控件类型)) As Double
-        ReadOnly Property Top(Item As I自制控件(Of 用户控件类型)) As Double
+        ReadOnly Property Left(Item As 用户控件类型) As Double
+        ReadOnly Property Top(Item As 用户控件类型) As Double
     End Interface
     ''' <summary>
     ''' 枚举内部的控件,而且能获取元素的位置。
     ''' </summary> 
     Public Interface I不变控件表(Of 用户控件类型)
         Inherits IEnumerable(Of 用户控件类型)
-        ReadOnly Property Left(Item As I自制控件(Of 用户控件类型)) As Double
-        ReadOnly Property Top(Item As I自制控件(Of 用户控件类型)) As Double
+        ReadOnly Property Left(Item As 用户控件类型) As Double
+        ReadOnly Property Top(Item As 用户控件类型) As Double
     End Interface
     Public Interface I可异步表(Of 用户控件类型)
         Inherits IList(Of 用户控件类型)

@@ -3,9 +3,8 @@ Imports System.Reflection
 ''' <summary>
 ''' 为了帮助更容易地编写SDK的代码而出现的模块.这些内容与红警杀没有直接关系。
 ''' </summary>
-''' <remarks></remarks>
-<HideModuleName()>
-Friend Module 语言拓展
+''' <remarks></remarks> 
+Public Module 语言拓展
     Dim ran As New Random
     ''' <summary>
     ''' 产生随机整数

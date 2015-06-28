@@ -1,27 +1,35 @@
-﻿Imports Nukepayload2.Ra2CodeAnalysis
+﻿
 Imports 红警杀.核心
 Public Interface ISettingReadWriter
     Function ReadAllText() As Task(Of String)
     Function WriteAllText(Text As String) As Task
 End Interface
-Public Class 设置管理器(Of 图像类型, 鼠标光标, 用户控件类型)
+Public Class 设置管理器
     Implements I设置管理器
 
     Dim Analizer As INIAnalizer
     Const GeneralSetting As String = "General"
     Dim SettingReadWriter As ISettingReadWriter
-    Sub New(ReadWriter As ISettingReadWriter)
-        Analizer = New INIAnalizer(ReadWriter.ReadAllText.Result)
-        Me.SettingReadWriter = ReadWriter
+    Private Sub New(Analizer As INIAnalizer, SettingReadWriter As ISettingReadWriter)
+        Me.Analizer = Analizer
+        Me.SettingReadWriter = SettingReadWriter
+    End Sub
+    Protected Shared Sub InitializeAnalizer(Analizer As INIAnalizer)
         If Not Analizer.Values.ContainsKey(GeneralSetting) Then
             Analizer.Values.Add(GeneralSetting, New Dictionary(Of String, Tuple(Of String, Integer)))
         End If
-        For Each t In Me.GetType.GetProperties
+        For Each t In GetType(I设置管理器).GetProperties
             If Not Analizer.Values(GeneralSetting).ContainsKey(t.Name) Then
                 Analizer.Values(GeneralSetting).Add(t.Name, New Tuple(Of String, Integer)(String.Empty, 0))
             End If
         Next
     End Sub
+    Public Shared Async Function Create(ReadWriter As ISettingReadWriter) As Task(Of I设置管理器)
+        Dim Analizer As New INIAnalizer(Await ReadWriter.ReadAllText)
+        InitializeAnalizer(Analizer)
+        Return New 设置管理器(Analizer, ReadWriter)
+    End Function
+
     Private Sub SetGeneralValue(Of T)(Value As T, Key As String)
         Analizer.Values(GeneralSetting)(Key) = New Tuple(Of String, Integer)(CStr(CObj(Value)), 0)
     End Sub
@@ -127,5 +135,6 @@ Public Class 设置管理器(Of 图像类型, 鼠标光标, 用户控件类型)
         Else
             Analizer.Reload(Await SettingReadWriter.ReadAllText)
         End If
+        InitializeAnalizer(Analizer)
     End Function
 End Class

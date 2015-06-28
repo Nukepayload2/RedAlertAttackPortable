@@ -8,14 +8,17 @@ Namespace 资源
         Public Const 图片目录 As String = "Images\"
         Public Const 拓展目录 As String = "Extensions\"
     End Module
+    ''' <summary>
+    ''' 包装一个流资源加载器
+    ''' </summary>
     Public MustInherit Class 资源加载器
+        Implements I资源加载器
         Public StreamCache As New Dictionary(Of String, Stream)
-        MustOverride Function GetStreamFromFile(path As String) As Stream
-
+        MustOverride Function GetStreamFromFile(path As String) As Stream Implements I资源加载器.GetStreamFromFile
         ''' <summary>
         ''' 加载到缓存中。Key 名称，Value 路径
         ''' </summary> 
-        Public Sub LoadFilesToStreamCache(ParamArray Name_Path() As KeyValuePair(Of String, String))
+        Public Sub LoadFilesToStreamCache(ParamArray Name_Path() As KeyValuePair(Of String, String)) Implements I资源加载器.LoadFilesToStreamCache
             For Each s In Name_Path
                 If Not StreamCache.ContainsKey(s.Key) Then
                     StreamCache.Add(s.Key, GetStreamFromFile(s.Value))
